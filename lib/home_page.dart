@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
                 child: RotatedBox(
                   quarterTurns: 3,
                   child: Text(
-                    'To Do Tasks',
+                    'ToDo Tasks',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.raleway(
                       fontSize: 30,
@@ -68,10 +68,10 @@ class _HomePageState extends State<HomePage> {
           const VerticalDivider(thickness: 1, width: 1),
           // This is the main content.
           _selectedIndex == 0
-              ? Expanded(child: Fijadas())
+              ? const Expanded(child: Fijadas())
               : _selectedIndex == 1
-                  ? Expanded(child: Etiquetas())
-                  : Expanded(child: Todas())
+                  ? const Expanded(child: Etiquetas())
+                  : const Expanded(child: TodasLasTareas())
         ],
       ),
     );

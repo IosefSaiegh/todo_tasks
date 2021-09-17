@@ -20,6 +20,7 @@ class _FijadasState extends State<Fijadas> {
   List<Widget> crearItems() {
     final lista = <Widget>[];
     for (String opt in opciones) {
+      nuevoValor = opt;
       final tempWidget = TareaListTile(
         titulo: Text(
           opt,
@@ -107,15 +108,23 @@ class _FijadasState extends State<Fijadas> {
                 ),
                 buttons: [
                   DialogButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      setState(() {
+                        opciones.remove(nuevoValor);
+                      });
+                    },
                     child: Text(
                       'Cancelar',
                       style: GoogleFonts.montserrat(
                         color: Colors.white,
-                        fontSize: 20,
+                        fontSize: 15,
                       ),
                     ),
-                  )
+                    radius: BorderRadius.circular(25.0),
+                    height: 30.0,
+                    width: 100,
+                  ),
                 ],
                 desc: 'Presiona Enter para crear la tarea',
               ).show();
