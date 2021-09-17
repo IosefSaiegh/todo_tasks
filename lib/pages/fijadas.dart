@@ -11,11 +11,60 @@ class Fijadas extends StatefulWidget {
 }
 
 class _FijadasState extends State<Fijadas> {
-  final opciones = [];
   bool completado = false;
-  final tituloTarea = TextEditingController();
-  String nuevoValor = '';
   TextStyle? fuenteMontserrat = GoogleFonts.montserrat();
+  String nuevoValor = '';
+  final opciones = [];
+  final tituloTarea = TextEditingController();
+
+  List<Widget> crearItems() {
+    final lista = <Widget>[];
+    for (String opt in opciones) {
+      final tempWidget = TareaListTile(
+        titulo: Text(
+          opt,
+          style: fuenteMontserrat,
+        ),
+        completado: completado,
+        iconCompletado: IconButton(
+          icon: const Icon(
+            Icons.clear_rounded,
+            color: Colors.red,
+          ),
+          onPressed: () {
+            setState(() {
+              completado = false;
+            });
+          },
+        ),
+        iconNoCompletado: IconButton(
+          icon: const Icon(
+            Icons.task_alt_rounded,
+            color: Colors.blue,
+          ),
+          onPressed: () {
+            setState(() {
+              completado = true;
+            });
+          },
+        ),
+        iconBorrar: IconButton(
+          onPressed: () {
+            setState(() {
+              opciones.remove(opt);
+            });
+          },
+          icon: const Icon(Icons.delete_outline),
+          color: Colors.red,
+        ),
+      );
+      lista.add(tempWidget);
+      lista.add(const Divider());
+    }
+
+    return lista;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,74 +121,9 @@ class _FijadasState extends State<Fijadas> {
               ).show();
             },
           );
-          // setState(() {
-          //   opciones.add(tituloTarea.text);
-          // });
         },
         child: const Icon(Icons.add_task_rounded),
       ),
     );
-  }
-
-  List<Widget> crearItems() {
-    final lista = <Widget>[];
-    // opciones.removeWhere((tarea) => tarea.name == '');
-    // tituloTarea.addListener(() {
-    //   opciones.add(tituloTarea.text);
-    // });
-    for (String opt in opciones) {
-      final tempWidget = TareaListTile(
-        titulo:
-            // opt == tituloTarea.text
-            //     ? Text(
-            //         opt,
-            //         style: fuenteMontserrat,
-            //       )
-            //     : Text(
-            //         nuevoValor,
-            //         style: fuenteMontserrat,
-            //       ),
-            Text(
-          opt,
-          style: fuenteMontserrat,
-        ),
-        completado: completado,
-        iconCompletado: IconButton(
-          icon: const Icon(
-            Icons.clear_rounded,
-            color: Colors.red,
-          ),
-          onPressed: () {
-            setState(() {
-              completado = false;
-            });
-          },
-        ),
-        iconNoCompletado: IconButton(
-          icon: const Icon(
-            Icons.task_alt_rounded,
-            color: Colors.blue,
-          ),
-          onPressed: () {
-            setState(() {
-              completado = true;
-            });
-          },
-        ),
-        iconBorrar: IconButton(
-          onPressed: () {
-            setState(() {
-              opciones.remove(opt);
-            });
-          },
-          icon: const Icon(Icons.delete_outline),
-          color: Colors.red,
-        ),
-      );
-      lista.add(tempWidget);
-      lista.add(const Divider());
-    }
-
-    return lista;
   }
 }
