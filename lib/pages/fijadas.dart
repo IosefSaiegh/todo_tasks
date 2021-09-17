@@ -4,6 +4,8 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:tareas/widgets/tarea.dart';
 
 class Fijadas extends StatefulWidget {
+  const Fijadas({Key? key}) : super(key: key);
+
   @override
   State<Fijadas> createState() => _FijadasState();
 }
@@ -22,48 +24,57 @@ class _FijadasState extends State<Fijadas> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          setState(() {
-            Alert(
-              context: context,
-              title: 'Tarea',
-              style: AlertStyle(
-                titleStyle: GoogleFonts.montserrat(),
-              ),
-              content: Column(
-                children: [
-                  TextField(
-                    decoration: InputDecoration(
-                      icon: const Icon(Icons.title_rounded),
-                      labelText: 'Titulo',
-                      labelStyle: fuenteMontserrat,
-                    ),
-                    controller: tituloTarea,
-                    style: fuenteMontserrat,
-                    onChanged: (newValue) {
-                      setState(() {
-                        nuevoValor = newValue;
-                      });
-                    },
+          setState(
+            () {
+              Alert(
+                context: context,
+                title: 'Tarea',
+                style: AlertStyle(
+                  titleStyle: GoogleFonts.montserrat(
+                    fontSize: 25,
                   ),
+                  descStyle: GoogleFonts.montserrat(
+                    fontSize: 15,
+                    backgroundColor: Colors.yellow[300],
+                  ),
+                ),
+                content: Column(
+                  children: [
+                    TextField(
+                      decoration: InputDecoration(
+                        icon: const Icon(Icons.title_rounded),
+                        labelText: 'Titulo',
+                        labelStyle: fuenteMontserrat,
+                      ),
+                      controller: tituloTarea,
+                      style: fuenteMontserrat,
+                      onSubmitted: (newValue) {
+                        setState(() {
+                          opciones.add(newValue);
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                buttons: [
+                  DialogButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      'Cancelar',
+                      style: GoogleFonts.montserrat(
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
+                    ),
+                  )
                 ],
-              ),
-              buttons: [
-                DialogButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text(
-                    'Crear Tarea',
-                    style: GoogleFonts.montserrat(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                )
-              ],
-            ).show();
-          });
-          setState(() {
-            opciones.add(tituloTarea.text);
-          });
+                desc: 'Presiona Enter para crear la tarea',
+              ).show();
+            },
+          );
+          // setState(() {
+          //   opciones.add(tituloTarea.text);
+          // });
         },
         child: const Icon(Icons.add_task_rounded),
       ),
@@ -72,17 +83,26 @@ class _FijadasState extends State<Fijadas> {
 
   List<Widget> crearItems() {
     final lista = <Widget>[];
+    // opciones.removeWhere((tarea) => tarea.name == '');
+    // tituloTarea.addListener(() {
+    //   opciones.add(tituloTarea.text);
+    // });
     for (String opt in opciones) {
       final tempWidget = TareaListTile(
-        titulo: opt == nuevoValor
-            ? Text(
-                opt,
-                style: fuenteMontserrat,
-              )
-            : Text(
-                nuevoValor,
-                style: fuenteMontserrat,
-              ),
+        titulo:
+            // opt == tituloTarea.text
+            //     ? Text(
+            //         opt,
+            //         style: fuenteMontserrat,
+            //       )
+            //     : Text(
+            //         nuevoValor,
+            //         style: fuenteMontserrat,
+            //       ),
+            Text(
+          opt,
+          style: fuenteMontserrat,
+        ),
         completado: completado,
         iconCompletado: IconButton(
           icon: const Icon(

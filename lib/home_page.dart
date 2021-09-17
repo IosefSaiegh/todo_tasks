@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tareas/pages/etiquetas.dart';
 import 'package:tareas/pages/fijadas.dart';
+import 'package:tareas/pages/todas.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -65,9 +67,11 @@ class _HomePageState extends State<HomePage> {
           ),
           const VerticalDivider(thickness: 1, width: 1),
           // This is the main content.
-          Expanded(
-            child: Fijadas(),
-          )
+          _selectedIndex == 0
+              ? Expanded(child: Fijadas())
+              : _selectedIndex == 1
+                  ? Expanded(child: Etiquetas())
+                  : Expanded(child: Todas())
         ],
       ),
     );
