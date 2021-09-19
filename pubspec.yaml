@@ -21,7 +21,6 @@ dependencies:
     sdk: flutter
   flutter_gen: ^3.1.2
   google_fonts: ^2.1.0
-  rflutter_alert: ^2.0.4
   shared_preferences: ^2.0.7
   shared_preferences_windows: ^2.0.2
 

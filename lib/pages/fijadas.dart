@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:tareas/widgets/tarea.dart';
 
 class Fijadas extends StatefulWidget {
@@ -16,6 +15,7 @@ class _FijadasState extends State<Fijadas> {
   String nuevoValor = '';
   final opciones = [];
   final tituloTarea = TextEditingController();
+  bool disabledBtn = true;
 
   List<Widget> crearItems() {
     final lista = <Widget>[];
@@ -76,63 +76,94 @@ class _FijadasState extends State<Fijadas> {
         onPressed: () {
           setState(
             () {
-              Alert(
-                context: context,
-                title: 'Tarea',
-                style: AlertStyle(
-                  titleStyle: GoogleFonts.montserrat(
-                    fontSize: 25,
-                  ),
-                  descStyle: GoogleFonts.montserrat(
-                    fontSize: 15,
-                    backgroundColor: Colors.yellow[300],
-                  ),
-                ),
-                content: Column(
-                  children: [
-                    TextField(
-                      decoration: InputDecoration(
-                        icon: const Icon(Icons.title_rounded),
-                        labelText: 'Titulo',
-                        labelStyle: fuenteMontserrat,
-                      ),
-                      controller: tituloTarea,
-                      style: fuenteMontserrat,
-                      onSubmitted: (newValue) {
-                        setState(() {
-                          opciones.add(newValue);
-                        });
-                      },
-                    ),
-                  ],
-                ),
-                buttons: [
-                  DialogButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      setState(() {
-                        opciones.remove(nuevoValor);
-                      });
-                    },
-                    child: Text(
-                      'Cancelar',
-                      style: GoogleFonts.montserrat(
-                        color: Colors.white,
-                        fontSize: 15,
-                      ),
-                    ),
-                    radius: BorderRadius.circular(25.0),
-                    height: 30.0,
-                    width: 100,
-                  ),
-                ],
-                desc: 'Presiona Enter para crear la tarea',
-              ).show();
+              _showMyDialog();
             },
           );
         },
         child: const Icon(Icons.add_task_rounded),
       ),
+    );
+  }
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Tarea'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: [
+                TextField(
+                  decoration: InputDecoration(
+                    icon: const Icon(Icons.title_rounded),
+                    labelText: 'Titulo',
+                    labelStyle: fuenteMontserrat,
+                  ),
+                  controller: tituloTarea,
+                  style: fuenteMontserrat,
+                  onSubmitted: (newValue) {
+                    setState(() {
+                      opciones.add(newValue);
+                      disabledBtn = false;
+                    });
+                    setState(() {});
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                setState(() {
+                  opciones.remove(nuevoValor);
+                });
+              },
+              child: Text(
+                'Cancelar',
+                style: GoogleFonts.montserrat(
+                  color: Colors.white,
+                  fontSize: 15,
+                ),
+              ),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.blue[400]),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                ),
+              ),
+            ),
+            disabledBtn == false
+                ? TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      'Guardar',
+                      style: GoogleFonts.montserrat(
+                        color: Colors.white,
+                        fontSize: 15,
+                      ),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.blue[400]),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                        ),
+                      ),
+                    ),
+                  )
+                : Container(),
+          ],
+        );
+      },
     );
   }
 }
