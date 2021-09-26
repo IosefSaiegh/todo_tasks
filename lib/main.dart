@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         home: const HomePage(),
         theme: ThemeData.dark().copyWith(
           floatingActionButtonTheme: const FloatingActionButtonThemeData(
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.blue, //#2196f3
           ),
         ),
       ),

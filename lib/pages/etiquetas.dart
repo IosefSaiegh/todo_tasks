@@ -15,7 +15,6 @@ class _EtiquetasState extends State<Etiquetas> {
   final opciones = [];
   final tituloTarea = TextEditingController();
   bool disabledBtn = true;
-  bool completado = false;
 
   List<Widget> crearItems() {
     final lista = <Widget>[];
