@@ -10,12 +10,12 @@ class Fijadas extends StatefulWidget {
 }
 
 class _FijadasState extends State<Fijadas> {
-  bool completado = false;
   TextStyle? fuenteMontserrat = GoogleFonts.montserrat();
   String nuevoValor = '';
   final opciones = [];
   final tituloTarea = TextEditingController();
   bool disabledBtn = true;
+  bool completado = false;
 
   List<Widget> crearItems() {
     final lista = <Widget>[];
@@ -26,29 +26,31 @@ class _FijadasState extends State<Fijadas> {
           opt,
           style: fuenteMontserrat,
         ),
-        completado: completado,
-        iconCompletado: IconButton(
-          icon: const Icon(
-            Icons.clear_rounded,
-            color: Colors.red,
-          ),
-          onPressed: () {
-            setState(() {
-              completado = false;
-            });
-          },
-        ),
-        iconNoCompletado: IconButton(
-          icon: const Icon(
-            Icons.task_alt_rounded,
-            color: Colors.blue,
-          ),
-          onPressed: () {
-            setState(() {
-              completado = true;
-            });
-          },
-        ),
+        iconCompletar: completado == true
+            ? IconButton(
+                icon: const Icon(
+                  Icons.clear_rounded,
+                  color: Colors.red,
+                ),
+                onPressed: () {
+                  setState(() {
+                    completado = false;
+                  });
+                },
+              )
+            : IconButton(
+                icon: const Icon(
+                  Icons.task_alt_rounded,
+                  color: Colors.blue,
+                ),
+                onPressed: () {
+                  setState(() {
+                    setState(() {
+                      completado = true;
+                    });
+                  });
+                },
+              ),
         iconBorrar: IconButton(
           onPressed: () {
             setState(() {
@@ -86,82 +88,96 @@ class _FijadasState extends State<Fijadas> {
   }
 
   Future<void> _showMyDialog() async {
-    return showDialog<void>(
+    showModalBottomSheet(
       context: context,
-      barrierDismissible: true,
+      shape: ShapeBorder.lerp(
+        const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        )),
+        const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        )),
+        20,
+      ),
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Tarea'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: [
-                TextField(
-                  decoration: InputDecoration(
-                    icon: const Icon(Icons.title_rounded),
-                    labelText: 'Titulo',
-                    labelStyle: fuenteMontserrat,
-                  ),
-                  controller: tituloTarea,
-                  style: fuenteMontserrat,
-                  onSubmitted: (newValue) {
-                    setState(() {
-                      opciones.add(newValue);
-                      disabledBtn = false;
-                    });
-                    setState(() {});
-                  },
-                ),
-              ],
-            ),
+        return Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 15.0,
+            horizontal: 50.0,
           ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-                setState(() {
-                  opciones.remove(nuevoValor);
-                });
-              },
-              child: Text(
-                'Cancelar',
+          child: Column(
+            children: [
+              Text(
+                'Crear tarea',
                 style: GoogleFonts.montserrat(
-                  color: Colors.white,
-                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
                 ),
+                textAlign: TextAlign.center,
               ),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.blue[400]),
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0),
-                  ),
-                ),
-              ),
-            ),
-            disabledBtn == false
-                ? TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      'Guardar',
-                      style: GoogleFonts.montserrat(
-                        color: Colors.white,
-                        fontSize: 15,
+              SingleChildScrollView(
+                child: ListBody(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 150,
+                        vertical: 15.0,
                       ),
-                    ),
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.blue[400]),
-                      shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.yellow[600],
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10.0,
+                          vertical: 5.0,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.info_outline_rounded,
+                              size: 25.0,
+                              color: Colors.black,
+                            ),
+                            const SizedBox(
+                              width: 3,
+                            ),
+                            Text(
+                              'Presiona Enter para guardar la tarea',
+                              style: GoogleFonts.raleway(
+                                fontSize: 25,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  )
-                : Container(),
-          ],
+                    TextField(
+                      decoration: InputDecoration(
+                        icon: const Icon(Icons.title_rounded),
+                        labelText: 'Titulo',
+                        labelStyle: fuenteMontserrat,
+                      ),
+                      controller: tituloTarea,
+                      style: fuenteMontserrat,
+                      onSubmitted: (newValue) {
+                        setState(() {
+                          opciones.add(newValue);
+                          disabledBtn = false;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         );
       },
     );

@@ -1,53 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:tareas/widgets/tarea.dart';
 
 class TodasLasTareas extends StatefulWidget {
   const TodasLasTareas({Key? key}) : super(key: key);
 
   @override
-  State<TodasLasTareas> createState() => _FijadasState();
+  State<TodasLasTareas> createState() => _TodasLasTareasState();
 }
 
-class _FijadasState extends State<TodasLasTareas> {
-  bool completado = false;
+class _TodasLasTareasState extends State<TodasLasTareas> {
   TextStyle? fuenteMontserrat = GoogleFonts.montserrat();
   String nuevoValor = '';
   final opciones = [];
   final tituloTarea = TextEditingController();
+  bool disabledBtn = true;
+  bool completado = false;
 
   List<Widget> crearItems() {
     final lista = <Widget>[];
     for (String opt in opciones) {
+      nuevoValor = opt;
       final tempWidget = TareaListTile(
         titulo: Text(
           opt,
           style: fuenteMontserrat,
         ),
-        completado: completado,
-        iconCompletado: IconButton(
-          icon: const Icon(
-            Icons.clear_rounded,
-            color: Colors.red,
-          ),
-          onPressed: () {
-            setState(() {
-              completado = false;
-            });
-          },
-        ),
-        iconNoCompletado: IconButton(
-          icon: const Icon(
-            Icons.task_alt_rounded,
-            color: Colors.blue,
-          ),
-          onPressed: () {
-            setState(() {
-              completado = true;
-            });
-          },
-        ),
+        iconCompletar: completado == true
+            ? IconButton(
+                icon: const Icon(
+                  Icons.clear_rounded,
+                  color: Colors.red,
+                ),
+                onPressed: () {
+                  setState(() {
+                    completado = false;
+                  });
+                },
+              )
+            : IconButton(
+                icon: const Icon(
+                  Icons.task_alt_rounded,
+                  color: Colors.blue,
+                ),
+                onPressed: () {
+                  setState(() {
+                    setState(() {
+                      completado = true;
+                    });
+                  });
+                },
+              ),
         iconBorrar: IconButton(
           onPressed: () {
             setState(() {
@@ -75,20 +78,86 @@ class _FijadasState extends State<TodasLasTareas> {
         onPressed: () {
           setState(
             () {
-              Alert(
-                context: context,
-                title: 'Tarea',
-                style: AlertStyle(
-                  titleStyle: GoogleFonts.montserrat(
-                    fontSize: 25,
-                  ),
-                  descStyle: GoogleFonts.montserrat(
-                    fontSize: 15,
-                    backgroundColor: Colors.yellow[300],
-                  ),
+              _showMyDialog();
+            },
+          );
+        },
+        child: const Icon(Icons.add_task_rounded),
+      ),
+    );
+  }
+
+  Future<void> _showMyDialog() async {
+    showModalBottomSheet(
+      context: context,
+      shape: ShapeBorder.lerp(
+        const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        )),
+        const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        )),
+        20,
+      ),
+      builder: (BuildContext context) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 15.0,
+            horizontal: 50.0,
+          ),
+          child: Column(
+            children: [
+              Text(
+                'Crear tarea',
+                style: GoogleFonts.montserrat(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
                 ),
-                content: Column(
+                textAlign: TextAlign.center,
+              ),
+              SingleChildScrollView(
+                child: ListBody(
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 150,
+                        vertical: 15.0,
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.yellow[600],
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10.0,
+                          vertical: 5.0,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.info_outline_rounded,
+                              size: 25.0,
+                              color: Colors.black,
+                            ),
+                            const SizedBox(
+                              width: 3,
+                            ),
+                            Text(
+                              'Presiona Enter para guardar la tarea',
+                              style: GoogleFonts.raleway(
+                                fontSize: 25,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                     TextField(
                       decoration: InputDecoration(
                         icon: const Icon(Icons.title_rounded),
@@ -100,30 +169,17 @@ class _FijadasState extends State<TodasLasTareas> {
                       onSubmitted: (newValue) {
                         setState(() {
                           opciones.add(newValue);
+                          disabledBtn = false;
                         });
                       },
                     ),
                   ],
                 ),
-                buttons: [
-                  DialogButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(
-                      'Cancelar',
-                      style: GoogleFonts.montserrat(
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
-                    ),
-                  )
-                ],
-                desc: 'Presiona Enter para crear la tarea',
-              ).show();
-            },
-          );
-        },
-        child: const Icon(Icons.add_task_rounded),
-      ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

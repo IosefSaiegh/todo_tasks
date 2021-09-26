@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
 import 'package:tareas/pages/etiquetas.dart';
 import 'package:tareas/pages/fijadas.dart';
 import 'package:tareas/pages/todas.dart';
+import 'package:tareas/providers/ui_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,9 +17,11 @@ class HomePage extends StatefulWidget {
 
 /// This is the private State class that goes with HomePage.
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
+    final uiProvider = Provider.of<UiProvider>(context);
+    int _selectedIndex = uiProvider.selectedMenuOpt;
+    // DBProvider.db.database;
     return Scaffold(
       body: Row(
         children: <Widget>[
@@ -37,9 +42,7 @@ class _HomePageState extends State<HomePage> {
               ),
               selectedIndex: _selectedIndex,
               onDestinationSelected: (int index) {
-                setState(() {
-                  _selectedIndex = index;
-                });
+                uiProvider.selectedMenuOpt = index;
               },
               selectedLabelTextStyle: GoogleFonts.montserrat(),
               labelType: NavigationRailLabelType.selected,
@@ -65,6 +68,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
+          
           const VerticalDivider(thickness: 1, width: 1),
           // This is the main content.
           _selectedIndex == 0
