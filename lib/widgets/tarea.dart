@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
-class TareaListTile extends StatelessWidget {
+class TareaListTile extends StatefulWidget {
   Color? colorTarea;
-  IconButton iconCompletar;
   IconButton iconBorrar;
   Text titulo;
   Text? subtitulo;
   TareaListTile({
     Key? key,
     this.colorTarea,
-    required this.iconCompletar,
     required this.iconBorrar,
     required this.titulo,
     this.subtitulo,
   }) : super(key: key);
+
+  @override
+  State<TareaListTile> createState() => _TareaListTileState();
+}
+
+class _TareaListTileState extends State<TareaListTile> {
+  bool? completado = false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +36,27 @@ class TareaListTile extends StatelessWidget {
             Radius.circular(50.0),
           ),
         ),
-        leading: iconCompletar,
-        title: titulo,
-        subtitle: subtitulo,
-        trailing: iconBorrar,
+        leading: Checkbox(
+          onChanged: (value) {
+            setState(() {
+              completado = value;
+            });
+          },
+          value: completado,
+          splashRadius: 15.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          side: const BorderSide(
+            color: Colors.grey,
+            style: BorderStyle.solid,
+            width: 2.0,
+          ),
+          activeColor: Colors.blue,
+        ),
+        title: widget.titulo,
+        subtitle: widget.subtitulo,
+        trailing: widget.iconBorrar,
       ),
     );
   }

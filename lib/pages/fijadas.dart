@@ -26,31 +26,6 @@ class _FijadasState extends State<Fijadas> {
           opt,
           style: fuenteMontserrat,
         ),
-        iconCompletar: completado == true
-            ? IconButton(
-                icon: const Icon(
-                  Icons.clear_rounded,
-                  color: Colors.red,
-                ),
-                onPressed: () {
-                  setState(() {
-                    completado = false;
-                  });
-                },
-              )
-            : IconButton(
-                icon: const Icon(
-                  Icons.task_alt_rounded,
-                  color: Colors.blue,
-                ),
-                onPressed: () {
-                  setState(() {
-                    setState(() {
-                      completado = true;
-                    });
-                  });
-                },
-              ),
         iconBorrar: IconButton(
           onPressed: () {
             setState(() {
@@ -92,15 +67,17 @@ class _FijadasState extends State<Fijadas> {
       context: context,
       shape: ShapeBorder.lerp(
         const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20.0),
-          topRight: Radius.circular(20.0),
-        )),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.0),
+            topRight: Radius.circular(20.0),
+          ),
+        ),
         const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20.0),
-          topRight: Radius.circular(20.0),
-        )),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.0),
+            topRight: Radius.circular(20.0),
+          ),
+        ),
         20,
       ),
       builder: (BuildContext context) {
@@ -122,41 +99,25 @@ class _FijadasState extends State<Fijadas> {
               SingleChildScrollView(
                 child: ListBody(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 150,
-                        vertical: 15.0,
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.yellow[600],
-                          borderRadius: BorderRadius.circular(20.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.info_outline_rounded,
+                          size: 17.5,
+                          color: Colors.yellow[700],
                         ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10.0,
-                          vertical: 5.0,
+                        const SizedBox(
+                          width: 3,
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.info_outline_rounded,
-                              size: 25.0,
-                              color: Colors.black,
-                            ),
-                            const SizedBox(
-                              width: 3,
-                            ),
-                            Text(
-                              'Presiona Enter para guardar la tarea',
-                              style: GoogleFonts.raleway(
-                                fontSize: 25,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
+                        Text(
+                          'Presiona Enter para guardar la tarea',
+                          style: GoogleFonts.raleway(
+                            fontSize: 17.5,
+                            color: Colors.yellow[700],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                     TextField(
                       decoration: InputDecoration(
