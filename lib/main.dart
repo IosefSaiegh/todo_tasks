@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'ToDo Tasks',
+        title: 'ToDo List',
         home: const HomePage(),
         theme: ThemeData.dark().copyWith(
           floatingActionButtonTheme: const FloatingActionButtonThemeData(

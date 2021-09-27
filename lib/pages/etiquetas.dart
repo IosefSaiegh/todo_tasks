@@ -26,6 +26,7 @@ class _EtiquetasState extends State<Etiquetas> {
           style: fuenteMontserrat,
         ),
         iconBorrar: IconButton(
+          splashRadius: 20.0,
           onPressed: () {
             setState(() {
               opciones.remove(opt);
@@ -41,6 +42,7 @@ class _EtiquetasState extends State<Etiquetas> {
 
     return lista;
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,6 +58,9 @@ class _EtiquetasState extends State<Etiquetas> {
           );
         },
         child: const Icon(Icons.add_task_rounded),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
       ),
     );
   }

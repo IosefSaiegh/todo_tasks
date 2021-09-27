@@ -26,6 +26,7 @@ class _TodasLasTareasState extends State<TodasLasTareas> {
           style: fuenteMontserrat,
         ),
         iconBorrar: IconButton(
+          splashRadius: 20.0,
           onPressed: () {
             setState(() {
               opciones.remove(opt);
@@ -57,6 +58,9 @@ class _TodasLasTareasState extends State<TodasLasTareas> {
           );
         },
         child: const Icon(Icons.add_task_rounded),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
       ),
     );
   }

@@ -33,7 +33,7 @@ class _TareaListTileState extends State<TareaListTile> {
         tileColor: Colors.grey[800],
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(50.0),
+            Radius.circular(15.0),
           ),
         ),
         leading: Checkbox(
@@ -43,9 +43,9 @@ class _TareaListTileState extends State<TareaListTile> {
             });
           },
           value: completado,
-          splashRadius: 15.0,
+          splashRadius: 20.0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
+            borderRadius: BorderRadius.circular(5.0),
           ),
           side: const BorderSide(
             color: Colors.grey,

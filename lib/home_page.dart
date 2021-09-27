@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
                 child: RotatedBox(
                   quarterTurns: 3,
                   child: Text(
-                    'ToDo Tasks',
+                    'ToDo List',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.raleway(
                       fontSize: 30,
@@ -46,6 +46,7 @@ class _HomePageState extends State<HomePage> {
               },
               selectedLabelTextStyle: GoogleFonts.montserrat(),
               labelType: NavigationRailLabelType.selected,
+              // elevation: 10.0,
               destinations: const <NavigationRailDestination>[
                 NavigationRailDestination(
                   icon: Icon(Icons.push_pin_outlined),
@@ -68,7 +69,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          
+
           const VerticalDivider(thickness: 1, width: 1),
           // This is the main content.
           _selectedIndex == 0
