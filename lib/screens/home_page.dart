@@ -2,29 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tareas/widgets/tarea.dart';
 
-class Etiquetas extends StatefulWidget {
-  const Etiquetas({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<Etiquetas> createState() => _EtiquetasState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _EtiquetasState extends State<Etiquetas> {
+class _HomePageState extends State<HomePage> {
   TextStyle? fuenteMontserrat = GoogleFonts.montserrat();
   String nuevoValor = '';
   final opciones = [];
   final tituloTarea = TextEditingController();
-  bool disabledBtn = true;
 
   List<Widget> crearItems() {
     final lista = <Widget>[];
     for (String opt in opciones) {
       nuevoValor = opt;
       final tempWidget = TareaListTile(
-        titulo: Text(
-          opt,
-          style: fuenteMontserrat,
-        ),
+        titulo: opt,
         iconBorrar: IconButton(
           splashRadius: 20.0,
           onPressed: () {
@@ -35,9 +31,24 @@ class _EtiquetasState extends State<Etiquetas> {
           icon: const Icon(Icons.delete_outline),
           color: Colors.red,
         ),
+        // iconEditar: IconButton(
+        //   splashRadius: 20.0,
+        //   onPressed: () {
+        //     setState(() {
+
+        //     });
+        //   },
+        //   icon: const Icon(Icons.edit_outlined),
+        //   color: Colors.blue,
+        // ),
       );
       lista.add(tempWidget);
-      lista.add(const Divider());
+      lista.add(
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15.0),
+          child: Divider(),
+        ),
+      );
     }
 
     return lista;
@@ -46,8 +57,20 @@ class _EtiquetasState extends State<Etiquetas> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: crearItems(),
+      appBar: AppBar(
+        title: Text(
+          'ToDo List',
+          style: GoogleFonts.montserrat(
+            fontSize: 25,
+          ),
+        ),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: ListView(
+          children: crearItems(),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -90,6 +113,7 @@ class _EtiquetasState extends State<Etiquetas> {
             horizontal: 50.0,
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 'Crear tarea',
@@ -133,7 +157,7 @@ class _EtiquetasState extends State<Etiquetas> {
                       onSubmitted: (newValue) {
                         setState(() {
                           opciones.add(newValue);
-                          disabledBtn = false;
+                          tituloTarea.text = '';
                         });
                       },
                     ),

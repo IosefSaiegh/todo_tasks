@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import 'package:tareas/models/argumentos_detalle.dart';
 
 class TareaListTile extends StatefulWidget {
   Color? colorTarea;
   IconButton iconBorrar;
-  Text titulo;
+  // IconButton iconEditar;
+  String titulo;
   Text? subtitulo;
   TareaListTile({
     Key? key,
     this.colorTarea,
     required this.iconBorrar,
+    // required this.iconEditar,
     required this.titulo,
     this.subtitulo,
   }) : super(key: key);
@@ -24,7 +29,7 @@ class _TareaListTileState extends State<TareaListTile> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
-        right: 50.0,
+        right: 20.0,
         left: 20.0,
         top: 8.0,
         bottom: 8.0,
@@ -54,9 +59,19 @@ class _TareaListTileState extends State<TareaListTile> {
           ),
           activeColor: Colors.blue,
         ),
-        title: widget.titulo,
+        title: Text(
+          widget.titulo,
+          style: GoogleFonts.montserrat(),
+        ),
         subtitle: widget.subtitulo,
         trailing: widget.iconBorrar,
+        onTap: () {
+          // Navigator.pushNamed(
+          //   context,
+          //   'detalle',
+          //   arguments: DetalleArguments(widget.titulo),
+          // );
+        },
       ),
     );
   }

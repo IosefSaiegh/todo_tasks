@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tareas/home_page.dart';
+import 'package:tareas/screens/detalle_page.dart';
+import 'package:tareas/screens/home_page.dart';
 import 'package:provider/provider.dart';
 import 'package:tareas/providers/ui_provider.dart';
 
@@ -18,12 +19,16 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'ToDo List',
-        home: const HomePage(),
+        initialRoute: 'home',
         theme: ThemeData.dark().copyWith(
           floatingActionButtonTheme: const FloatingActionButtonThemeData(
             backgroundColor: Colors.blue, //#2196f3
           ),
         ),
+        routes: {
+          'home' : (context) => const HomePage(),
+          'detalle' : (context) => DetallePage(),
+        },
       ),
     );
   }
