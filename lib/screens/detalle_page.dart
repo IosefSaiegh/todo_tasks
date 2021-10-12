@@ -4,6 +4,8 @@ import 'package:tareas/models/argumentos_detalle.dart';
 // import 'package:tareas/models/argumentos_detalle.dart';
 
 class DetallePage extends StatelessWidget {
+  const DetallePage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final DetalleArguments? args =

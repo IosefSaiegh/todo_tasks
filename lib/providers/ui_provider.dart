@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 class UiProvider extends ChangeNotifier {
-  int _selectedMenuOpt = 0;
-  int get selectedMenuOpt {
-    return this._selectedMenuOpt;
+  bool _darkMode = false;
+
+  bool get darkMode {
+    return this._darkMode;
   }
 
-  set selectedMenuOpt(int i) {
-    this._selectedMenuOpt = i;
+  set darkMode(bool dm) {
+    this._darkMode = dm;
     notifyListeners();
   }
 }

@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:tareas/models/argumentos_detalle.dart';
-
 class TareaListTile extends StatefulWidget {
   Color? colorTarea;
   IconButton iconBorrar;
   // IconButton iconEditar;
   String titulo;
-  Text? subtitulo;
+  String? descripcion;
   TareaListTile({
     Key? key,
     this.colorTarea,
     required this.iconBorrar,
     // required this.iconEditar,
     required this.titulo,
-    this.subtitulo,
+    this.descripcion,
   }) : super(key: key);
 
   @override
@@ -61,9 +59,20 @@ class _TareaListTileState extends State<TareaListTile> {
         ),
         title: Text(
           widget.titulo,
-          style: GoogleFonts.montserrat(),
+          style: GoogleFonts.montserrat(
+            color: Colors.white,
+            fontSize: 20,
+          ),
         ),
-        subtitle: widget.subtitulo,
+        subtitle: widget.descripcion == null
+            ? null
+            : Text(
+                widget.descripcion.toString(),
+                style: GoogleFonts.montserrat(
+                  color: Colors.white,
+                  fontSize: 12.5,
+                ),
+              ),
         trailing: widget.iconBorrar,
         onTap: () {
           // Navigator.pushNamed(
@@ -71,6 +80,13 @@ class _TareaListTileState extends State<TareaListTile> {
           //   'detalle',
           //   arguments: DetalleArguments(widget.titulo),
           // );
+          setState(() {
+            if (completado == true) {
+              completado = false;
+            } else {
+              completado = true;
+            }
+          });
         },
       ),
     );

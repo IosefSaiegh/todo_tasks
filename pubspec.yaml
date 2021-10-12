@@ -22,9 +22,10 @@ dependencies:
   flutter_gen: ^3.1.2
   flutter_local_notifications: ^8.2.0
   google_fonts: ^2.1.0
+  group_radio_button: ^1.1.0
   path_provider: ^2.0.5
   provider: ^6.0.0
-  shared_preferences: ^2.0.7
+  shared_preferences: ^2.0.8
   shared_preferences_windows: ^2.0.2
   sqflite: ^2.0.0+4
 
