@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:tareas/models/tarea_model.dart';
+
 class TareaListTile extends StatefulWidget {
   Color? colorTarea;
   IconButton iconBorrar;
-  // IconButton iconEditar;
+  IconButton iconEditar;
+  bool completado;
   String titulo;
-  String? descripcion;
+  String descripcion;
   TareaListTile({
     Key? key,
     this.colorTarea,
     required this.iconBorrar,
-    // required this.iconEditar,
+    required this.iconEditar,
+    required this.completado,
     required this.titulo,
-    this.descripcion,
+    required this.descripcion,
   }) : super(key: key);
 
   @override
@@ -21,8 +25,6 @@ class TareaListTile extends StatefulWidget {
 }
 
 class _TareaListTileState extends State<TareaListTile> {
-  bool? completado = false;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -42,10 +44,10 @@ class _TareaListTileState extends State<TareaListTile> {
         leading: Checkbox(
           onChanged: (value) {
             setState(() {
-              completado = value;
+              widget.completado != widget.completado;
             });
           },
-          value: completado,
+          value: widget.completado,
           splashRadius: 20.0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5.0),
@@ -63,30 +65,29 @@ class _TareaListTileState extends State<TareaListTile> {
             color: Colors.white,
             fontSize: 20,
           ),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
         ),
-        subtitle: widget.descripcion == null
-            ? null
-            : Text(
-                widget.descripcion.toString(),
-                style: GoogleFonts.montserrat(
-                  color: Colors.white,
-                  fontSize: 12.5,
-                ),
-              ),
+        subtitle: Text(
+          widget.descripcion.toString(),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+          style: GoogleFonts.montserrat(
+            color: Colors.white,
+            fontSize: 12.5,
+          ),
+        ),
         trailing: widget.iconBorrar,
         onTap: () {
-          // Navigator.pushNamed(
-          //   context,
-          //   'detalle',
-          //   arguments: DetalleArguments(widget.titulo),
-          // );
-          setState(() {
-            if (completado == true) {
-              completado = false;
-            } else {
-              completado = true;
-            }
-          });
+          Navigator.pushNamed(
+            context,
+            'detalle',
+            arguments: Tarea(
+              titulo: widget.titulo,
+              descripcion: widget.descripcion,
+              completado: widget.completado,
+            ),
+          );
         },
       ),
     );

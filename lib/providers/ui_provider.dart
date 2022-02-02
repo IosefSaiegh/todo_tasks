@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 
-class UiProvider extends ChangeNotifier {
-  bool _darkMode = false;
+class DarkThemeProvider with ChangeNotifier {
+  bool _darkTheme = false;
 
-  bool get darkMode {
-    return this._darkMode;
-  }
+  bool get darkTheme => _darkTheme;
 
-  set darkMode(bool dm) {
-    this._darkMode = dm;
+  set darkTheme(bool value) {
+    _darkTheme = value;
     notifyListeners();
   }
 }

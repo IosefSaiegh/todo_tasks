@@ -1,30 +1,16 @@
-import 'dart:convert';
+class Tarea {
 
-TareaModel tareaModelFromJson(String str) =>
-    TareaModel.fromJson(json.decode(str));
+  // int id;
+  String titulo;
+  String descripcion;
+  bool completado; 
 
-String tareaModelToJson(TareaModel data) => json.encode(data.toJson());
-
-class TareaModel {
-  TareaModel({
-    required this.id,
+  Tarea({
+      // required this.id,
     required this.titulo,
+    required this.descripcion,
     required this.completado,
   });
 
-  int id;
-  String titulo;
-  bool completado;
-
-  factory TareaModel.fromJson(Map<String, dynamic> json) => TareaModel(
-        id: json["id"],
-        titulo: json["titulo"],
-        completado: json["completado"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "titulo": titulo,
-        "completado": completado,
-      };
+  
 }
